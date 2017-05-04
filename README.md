@@ -17,7 +17,7 @@ A native module calls execve(2) without the normal preceding fork(2) call when t
 * Go 1.5 or above
 * Node.js v0.10 or above and node-gyp
 * Make and GCC
-** If you are using OSX then as of right now you need the FULL xcode installed. Command line tools alone will not work.
+* If you are using OSX then as of right now you need the FULL xcode installed. Command line tools alone will not work.
 
 ## Hello, world!
 A demo hello world example is included. To try it out, simply skip to the [Deployment](#deployment) section.
