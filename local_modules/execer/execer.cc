@@ -39,7 +39,13 @@ void init(Handle<Object> target) {
 		exit(1);
 	}
 
-	DIR *dir = opendir("/proc/self/fd");
+	DIR *dir = opendir(
+		#ifdef __APPLE__
+		"/dev/fd"
+		#else
+		"/proc/self/fd"
+		#endif
+	);
 	if (dir == NULL) {
 		fprintf(stderr, "opendir failed\n");
 		exit(1);
