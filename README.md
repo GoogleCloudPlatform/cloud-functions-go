@@ -13,7 +13,7 @@ After an initial bootstrap step, the only thing running is a pure Go binary. Thi
 A native module calls execve(2) without the normal preceding fork(2) call when the user module is imported. Open socket FDs are preserved and handled by the new Go process to ensure a smooth transition. The new Go process then pretends to be Node.
 
 ## Requirements
-* Linux development environment (The native Node module depends on Linux specific behavior. It is theoretically possible to use a non-Linux environment for development, but this is untested and you won't be able to test your code locally.)
+* Linux or OSX development environment (The native Node module depends on Linux specific behavior. It is theoretically possible to use a non-Linux environment for development, but this is untested and you won't be able to test your code locally.)
 * Go 1.5 or above
 * Node.js v0.10 or above and node-gyp
 * Make and GCC
