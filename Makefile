@@ -19,7 +19,7 @@ all: go js
 	zip -FS -r $(OUT) $(GOBIN) node_modules index.js package.json -x *build*
 
 go: FORCE
-	GODEBUG=netdns=go GOARCH="amd64" GOOS="linux" go build $(GOBIN).go
+	GOARCH="amd64" GOOS="linux" go build $(GOBIN).go -tags netgo
 
 js: FORCE
 	npm install --save local_modules/execer
