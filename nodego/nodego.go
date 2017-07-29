@@ -27,7 +27,7 @@ import (
 	"sync"
 )
 
-const HTTPTrigger = "/req"
+const HTTPTrigger = "/execute"
 
 var fds = flag.String("fds", "", "fd1,fd2,...")
 
@@ -44,9 +44,8 @@ func TakeOver() {
 	ready := func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "User function is ready")
 	}
-	http.HandleFunc("/start", ready)
-	http.HandleFunc("/check", ready)
-	http.HandleFunc("/init", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/load", ready)
+	http.HandleFunc("/check", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "OK")
 	})
 
