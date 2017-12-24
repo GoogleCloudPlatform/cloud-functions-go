@@ -38,6 +38,30 @@ Run ```make test``` to compile your code and start the test server. Open ```http
 
 When using a go-only or non-unix environment, run ```make godev``` instead.
 
+## Logging
+The logger may be used directly:
+```
+nodego.InfoLogger.Println("Hello World!")
+nodego.ErrorLogger.Println("Something went wrong!")
+```
+or via the log package after calling `nodego.OverrideLogger()`:
+```
+func init() {
+	nodego.OverrideLogger()
+}
+
+...
+
+log.Println("Hello World!")
+```
+Use the `nodego.WithLogger()` or `nodego.WithLoggerFunc()` middleware for your logs to reference the specific execution:
+```
+http.WithLoggerFunc(func(w http.ResponseWriter, r *http.Request) {
+	log.Println("Hello World!")
+})
+```
+A full example is included in [examples/logging.go](examples/logging.go).
+
 ## Deployment
 Run ```make``` to compile and package your code. Upload the generated ```function.zip``` file to Google Cloud Functions as an HTTP trigger function.
 
@@ -46,7 +70,6 @@ Run ```vagrant up``` to start the envirement. Run ```vagrant ssh``` to connect t
 
 ## Limitations
 * This has only been tested for HTTP trigger functions. Non-HTTP trigger functions will use a different endpoint (not ```/execute```).
-* Logging is not supported (yet).
 
 ## Troubleshooting
 Some versions of Node.js (especially those packaged for Ubuntu) name their main binary ```nodejs``` instead of ```node```. The symptom of this problem is an error about the ```node``` binary not being found in the path even though Node.js is installed. This can be fixed with ```sudo ln -s $(which nodejs) /usr/local/bin/node```. There's also a package called `nodejs-legacy` that can be installed in some Debian and Ubuntu distros using `apt` that creates a symlink `node` in `/usr/bin/`
