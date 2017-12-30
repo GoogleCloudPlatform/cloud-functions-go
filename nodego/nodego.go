@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// +build node
+
 // Package nodego provides utilities for pretending to be node.
 package nodego
 
@@ -26,8 +28,6 @@ import (
 	"strings"
 	"sync"
 )
-
-const HTTPTrigger = "/execute"
 
 var fds = flag.String("fds", "", "fd1,fd2,...")
 

@@ -36,6 +36,8 @@ For normal development, it should only be necessary to modify the main.go file. 
 ## Local Testing
 Run ```make test``` to compile your code and start the test server. Open ```http://localhost:8080/execute``` in your browser. The page should display ```User function is ready```. Refresh the page to talk to your code.
 
+When using a go-only or non-unix environment, run ```make godev``` instead.
+
 ## Deployment
 Run ```make``` to compile and package your code. Upload the generated ```function.zip``` file to Google Cloud Functions as an HTTP trigger function.
 

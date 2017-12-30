@@ -19,16 +19,19 @@ all: go js
 	zip -FS -r $(OUT) $(GOBIN) node_modules index.js package.json -x *build*
 
 go: FORCE
-	GOARCH="amd64" GOOS="linux" go build -tags netgo $(GOBIN).go
+	GOARCH="amd64" GOOS="linux" go build -tags netgo node $(GOBIN).go
 
 js: FORCE
 	npm install --save local_modules/execer
 
 localgo: FORCE
-	go build $(GOBIN).go
+	go build -tags node $(GOBIN).go
 
 clean: FORCE
 	rm -rf $(GOBIN) $(OUT) node_modules
+
+godev: FORCE
+	go run $(GOBIN).go
 
 test: js localgo
 	node testserver.js
