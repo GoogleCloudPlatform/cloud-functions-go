@@ -62,21 +62,21 @@ type logBatch struct {
 // addEntry adds a log entry to the batch.
 //
 // Note: addEntry is not thread safe.
-func (batch *logBatch) addEntry(entry *logEntry) {
-	if batch.Entries == nil {
-		close(batch.ready)
+func (b *logBatch) addEntry(entry *logEntry) {
+	if b.Entries == nil {
+		close(b.ready)
 	}
 
-	batch.Entries = append(batch.Entries, entry)
-	batch.payloadLength += len(entry.TextPayload)
+	b.Entries = append(b.Entries, entry)
+	b.payloadLength += len(entry.TextPayload)
 }
 
-func (batch *logBatch) report() error {
-	if len(batch.Entries) == 0 {
+func (b *logBatch) report() error {
+	if len(b.Entries) == 0 {
 		return nil
 	}
 
-	if err := postToSupervisor("/_ah/log", batch, supervisorLogTimeout); err != nil {
+	if err := postToSupervisor("/_ah/log", b, supervisorLogTimeout); err != nil {
 		return err
 	}
 
@@ -97,55 +97,55 @@ type loggingContext struct {
 // startNewBatch prepares a new batch.
 //
 // Note: startNewBatch is not thread safe.
-func (ctx *loggingContext) startNewBatch() *logBatch {
-	ctx.currentBatch = &logBatch{
+func (c *loggingContext) startNewBatch() *logBatch {
+	c.currentBatch = &logBatch{
 		ready: make(chan struct{}),
 	}
-	ctx.queue <- ctx.currentBatch
-	return ctx.currentBatch
+	c.queue <- c.currentBatch
+	return c.currentBatch
 }
 
-func (ctx *loggingContext) setExecutionID(id string) {
-	ctx.execIDMutex.Lock()
-	ctx.execID = id
-	ctx.execIDMutex.Unlock()
+func (c *loggingContext) setExecutionID(id string) {
+	c.execIDMutex.Lock()
+	c.execID = id
+	c.execIDMutex.Unlock()
 }
 
-func (ctx *loggingContext) executionID() string {
-	ctx.execIDMutex.RLock()
-	defer ctx.execIDMutex.RUnlock()
-	return ctx.execID
+func (c *loggingContext) executionID() string {
+	c.execIDMutex.RLock()
+	defer c.execIDMutex.RUnlock()
+	return c.execID
 }
 
-func (ctx *loggingContext) addEntry(entry *logEntry) bool {
-	if ctx.queue == nil {
+func (c *loggingContext) addEntry(entry *logEntry) bool {
+	if c.queue == nil {
 		return false
 	}
 
-	ctx.queueMutex.Lock()
-	defer ctx.queueMutex.Unlock()
+	c.queueMutex.Lock()
+	defer c.queueMutex.Unlock()
 
 	// Start a new batch if the current one would grow too much.
-	if len(ctx.currentBatch.Entries) > 0 &&
-		(len(ctx.currentBatch.Entries)+1 > maxLogBatchEntries ||
-			ctx.currentBatch.payloadLength+len(entry.TextPayload) > maxLogBatchLength) {
-		ctx.startNewBatch()
+	if len(c.currentBatch.Entries) > 0 &&
+		(len(c.currentBatch.Entries)+1 > maxLogBatchEntries ||
+			c.currentBatch.payloadLength+len(entry.TextPayload) > maxLogBatchLength) {
+		c.startNewBatch()
 	}
 
-	ctx.currentBatch.addEntry(entry)
+	c.currentBatch.addEntry(entry)
 
 	return true
 }
 
-func (ctx *loggingContext) startReportWorker() {
-	for logBatch := range ctx.queue {
+func (c *loggingContext) startReportWorker() {
+	for logBatch := range c.queue {
 		<-logBatch.ready
 
-		ctx.queueMutex.Lock()
-		if logBatch == ctx.currentBatch {
-			ctx.startNewBatch()
+		c.queueMutex.Lock()
+		if logBatch == c.currentBatch {
+			c.startNewBatch()
 		}
-		ctx.queueMutex.Unlock()
+		c.queueMutex.Unlock()
 
 		if err := logBatch.report(); err != nil {
 			fmt.Fprintln(os.Stderr, err.Error())
@@ -154,11 +154,11 @@ func (ctx *loggingContext) startReportWorker() {
 	}
 }
 
-func (ctx *loggingContext) initialize() {
-	ctx.initOnce.Do(func() {
-		ctx.queue = make(chan *logBatch, 5)
-		ctx.startNewBatch()
-		go ctx.startReportWorker()
+func (c *loggingContext) initialize() {
+	c.initOnce.Do(func() {
+		c.queue = make(chan *logBatch, 5)
+		c.startNewBatch()
+		go c.startReportWorker()
 	})
 }
 
