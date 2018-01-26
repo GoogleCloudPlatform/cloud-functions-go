@@ -245,9 +245,10 @@ func postToSupervisor(path string, v interface{}, timeout time.Duration) error {
 	}
 
 	resp, err := doRequestWithContext(ctx, req)
-	if err == ctx.Err() {
-		return errors.New("timeout when calling supervisor")
-	} else if err != nil {
+	if err != nil {
+		if err == ctx.Err() {
+			return errors.New("timeout when calling supervisor")
+		}
 		return fmt.Errorf("error when calling supervisor: %s\n\n%s\n", err.Error(), debug.Stack())
 	}
 
