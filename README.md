@@ -17,7 +17,7 @@ There are two supported environments:
 For advanced users who don't like VirtualBox.
 * Linux or macOS development environment (The native Node module depends on Linux/macOS specific behavior.)
 * Go 1.5 or above
-* Node.js v0.10 or above and node-gyp
+* Node.js v0.10 or above, npm and node-gyp
 * Make and GCC
 * If you are using macOS then as of right now you need the FULL xcode installed. Command line tools alone will not work.
 ### Vagrant
@@ -25,7 +25,12 @@ Compatible with Windows, macOS and Linux and easier than native development.
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or a compatable provider
   * Optional: [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest)
-Support for other Vagrant providers is in the works.
+In the `cloud-functions-go` directory, run `vagrant up` to start the envirement and `vagrant ssh` to get a shell. Support for other Vagrant providers besides VirtualBox is in the works.
+### Windows with Cygwin
+* Go for Windows
+* Node.js for Windows
+* [Cygwin](https://cygwin.com/install.html) with `make` and `zip` (you may also want `git` and an editor like `vim` or `nano`)
+Use the Cygwin Terminal to run the commands as described below. Note that `make test` won't work under Windows.
 
 ## Hello, world!
 A demo hello world example is included. To try it out, simply skip to the [Deployment](#deployment) section.
