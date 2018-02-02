@@ -12,7 +12,7 @@ After an initial bootstrap step, the only thing running is a pure Go binary. Thi
 A native module calls execve(2) without the normal preceding fork(2) call when the user module is imported. Open socket FDs are preserved and handled by the new Go process to ensure a smooth transition. The new Go process then pretends to be Node.
 
 ## Requirements
-There are two supported environments:
+There are four supported environments:
 
 ### Native
 For advanced users who don't like VirtualBox.
@@ -36,6 +36,12 @@ In the `cloud-functions-go` directory, run `vagrant up` to start the envirement 
 * [Cygwin](https://cygwin.com/install.html) with `make` and `zip` (you may also want `git` and an editor like `vim` or `nano`)
 
 Use the Cygwin Terminal to run the commands as described below. Note that `make test` won't work under Windows.
+
+### Windows with Powershell 5.0
+* Go 1.5 or above
+* Node.js (optional)
+
+The commands described below may be run as-is using Command Prompt, or prefixed with `./` using Windows PowerShell (i.e. `./make` or `./make godev`). Note that `make test` won't work under Windows.
 
 ## Hello, world!
 A demo hello world example is included. To try it out, simply skip to the [Deployment](#deployment) section.
