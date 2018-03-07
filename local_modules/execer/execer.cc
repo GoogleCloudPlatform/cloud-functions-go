@@ -142,6 +142,7 @@ void init(Handle<Object> target) {
   
 	// Convert the vector to a comma separated list.
 	std::ostringstream flag;
+	flag << "-fds=";
 	for(size_t i = 0; i < fds.size(); ++i) {
 		if(i > 0) flag << ",";
 		flag << fds[i];
@@ -149,8 +150,10 @@ void init(Handle<Object> target) {
 
 	std::vector<const char*> args;
 	args.push_back(bin);
-	args.push_back("--fds");
-	args.push_back(flag.str().c_str());
+
+	std::string str = flag.str();
+	args.push_back(str.c_str());
+
 	args.push_back(NULL);
 
 	fprintf(stderr, "execing replacement binary...\n");
