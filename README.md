@@ -28,7 +28,7 @@ Compatible with Windows, macOS and Linux and easier than native development.
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads) or a compatable provider
   * Optional: [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest)
 
-In the `cloud-functions-go` directory, run `vagrant up` to start the envirement and `vagrant ssh` to get a shell. Support for other Vagrant providers besides VirtualBox is in the works.
+In the `cloud-functions-go` directory, run `vagrant up` to start the environment and `vagrant ssh` to get a shell. Support for other Vagrant providers besides VirtualBox is in the works.
 
 ### Windows with Cygwin
 * Go for Windows
