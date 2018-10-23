@@ -16,13 +16,13 @@ GOBIN = main
 OUT = function.zip
 
 all: gcfgo gcfjs
-	zip -FS -r $(OUT) $(GOBIN) node_modules index.js package.json -x *build*
+	zip -FS -r $(OUT) $(GOBIN) local_modules index.js package.json -x *build*
 
 gcfgo: FORCE
 	GOARCH="amd64" GOOS="linux" CGO_ENABLED=0 go build -tags node $(GOBIN).go
 
 gcfjs: FORCE
-	npm install --ignore-scripts --save local_modules/execer
+	#npm install --ignore-scripts --save local_modules/execer
 
 localgo: FORCE
 	go build -tags node $(GOBIN).go
