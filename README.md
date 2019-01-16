@@ -2,8 +2,13 @@
 
 _Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way._
 
+## Looking for the official Go Runtime for Google Cloud Functions?
+Google Cloud Functions supports an official Go runtime. Check out the [quickstart](https://cloud.google.com/functions/docs/quickstart#functions-update-install-gcloud-go) to try it out.
+
 ## Background
-At the time of writing, Google Cloud Functions only supports a Node.js based runtime. Running non-JavaScript code is only officially supported in the form of native Node modules and running subprocesses. Node will always be handling the requests. Wrapping Go code in a native Node module will require writing complicated foreign function interfaces (FFIs). FFIs are notoriously difficult to get right and are an easy way to introduce memory leaks as well as security and stability issues. Using a subprocess is much easier to get right, but it introduces the overhead of interprocess communication (IPC) and context switches. In both cases, the requests are proxied between Node and Go which typically involves extra copies and translations.
+When this doc was first written, Google Cloud Functions only supported a Node.js runtime. Since then, new official runtimes have been added. Using an official runtime (such as the official Go runtime) is the recommended approach for almost all users. 
+
+But if you're feeling adventurous, you can run non-JavaScript code by using native Node modules and running subprocesses. Node will always be handling the requests. Wrapping Go code in a native Node module will require writing complicated foreign function interfaces (FFIs). FFIs are notoriously difficult to get right and are an easy way to introduce memory leaks as well as security and stability issues. Using a subprocess is much easier to get right, but it introduces the overhead of interprocess communication (IPC) and context switches. In both cases, the requests are proxied between Node and Go which typically involves extra copies and translations.
 
 ## 100% Pure Go Request Path
 After an initial bootstrap step, the only thing running is a pure Go binary. This project works by completely replacing the Node process and lets a Go process directly handle requests. There is no cgo and no proxying. This means that it is faster and potentially more secure than other projects which typically to use both.
