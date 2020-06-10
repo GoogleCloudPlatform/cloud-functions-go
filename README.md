@@ -1,3 +1,14 @@
+# Status: Archived
+
+![status: inactive](https://img.shields.io/badge/status-inactive-red.svg)
+
+This repository has been archived and is no longer maintained.
+
+We recommend you use:
+- **[Functions Framework for Go](https://github.com/GoogleCloudPlatform/functions-framework-go):** This library is the same library that powers functions for Go and can be used for local development.
+
+---
+
 # Unofficial Native Go Runtime for Google Cloud Functions
 
 _Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way._
