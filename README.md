@@ -5,6 +5,7 @@
 This repository has been archived and is no longer maintained.
 
 We recommend you use:
+- **[Google Cloud Functions offical Go Runtime](https://cloud.google.com/functions/docs/concepts/go-runtime):** Cloud Functions now has built-in Go support, nothing extra required.
 - **[Functions Framework for Go](https://github.com/GoogleCloudPlatform/functions-framework-go):** This library is the same library that powers functions for Go and can be used for local development.
 
 ---
@@ -12,9 +13,6 @@ We recommend you use:
 # Unofficial Native Go Runtime for Google Cloud Functions
 
 _Disclaimer: This is not an official Google product. It is not and will not be maintained by Google, and is not part of Google Cloud Functions project. There is no guarantee of any kind, including that it will work or continue to work, or that it will supported in any way._
-
-## Looking for the official Go Runtime for Google Cloud Functions?
-Google Cloud Functions supports an official Go runtime. Check out the [quickstart](https://cloud.google.com/functions/docs/quickstart#functions-update-install-gcloud-go) to try it out.
 
 ## Background
 When this doc was first written, Google Cloud Functions only supported a Node.js runtime. Since then, new official runtimes have been added. Using an official runtime (such as the official Go runtime) is the recommended approach for almost all users. 
